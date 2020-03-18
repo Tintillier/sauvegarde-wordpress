@@ -3,13 +3,12 @@ Script python avec sauvegarde déportée en ftp et rapport par email (msmtp)
 Les tests on été fait sur Pyhton 2.7.17 et Debian 10
 
 LE SCRIPT (sauve.py) FAIT UNE SAUVEGARDE DE TYPE "COMPLETE" D'UN SITE WORDPRESS
-L'envoi du mail fait appel à msmtp (adapter selon votre infrastricture) via un script bash.
-        ( dans le fichier maillog.sh adapter en saisissant l'adresse mail de destination à la place de "adressemail")
+L'envoi du mail fait appel à msmtp (adapter selon votre infrastructure) via un script bash.
+        (Dans le fichier maillog.sh adapter en saisissant l'adresse mail de destination à la place de "adressemail")
 Le script sauvegarde également les fichiers hosts, hostname, interfaces, resolv.conf et 000-default.conf du serveur web
 "Un dump" de la base Mysql est réalisé afin de pouvoir éventuellement faire une intervention manuelle sur la base de donnée
 
-Variables à adapter (fichier sauve.py) :
-
+Autres variables à adapter (fichier sauve.py) :
 ATTENTION: dans ce script j'efface les anciennes sauvegardes (2mn soit 120 secondes), CHANGER CETTE VALEUR EN SECONDES pour le nombre de jours pendant lesquels vous voulez conserver vos sauvegardes
 LIGNE avec la variable deux_minutes_ago = time.time() - 120
 
