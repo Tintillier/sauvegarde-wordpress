@@ -1,0 +1,209 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoChpDefault
+	{font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:36.0pt 36.0pt 36.0pt 36.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=FR>
+
+<div class=WordSection1>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'># sauvegarde-worpress</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>Scripts python avec sauvegarde déportée
+en ftp et rapport par email (msmtp)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>Les tests ont été fait sur Pyhton 2.7.17
+et Debian 10</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>LE SCRIPT (sauver-complete.py) FAIT UNE
+SAUVEGARDE DE TYPE &quot;COMPLETE&quot; D'UN SITE WORDPRESS</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>L'envoi du mail fait appel à msmtp
+(adapter selon votre infrastructure) via le script bash maillog.sh.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>        (Dans le fichier maillog.sh
+adapter en saisissant l'adresse mail de destination)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>Le script sauvegarde également les
+fichiers hosts, hostname, interfaces, resolv.conf et 000-default.conf du
+serveur web</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&quot;Un dump&quot; de la base Mysql est
+réalisé afin de pouvoir éventuellement faire une intervention manuelle sur la base
+de données</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>Autres variables à adapter (fichier
+sauver-complete.py) :</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>ATTENTION : dans ce script j'efface les
+anciennes sauvegardes, CHANGER CETTE VALEUR EN SECONDES pour le nombre de jours
+pendant lesquels vous voulez conserver vos sauvegardes (variable
+deux_minutes_ago)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>BACKUP_PATH = '/home/backup/' &gt;&gt;
+Dossier pour la sauvegarde sur le serveur</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>WEB_PATH = '/var/www/html/wordpress'
+&gt;&gt; Dossier du site Wordpress sur le serveur</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>SQL_PATH = '/var/lib/mysql'
+&gt;&gt;Chemin vers la Base Mysql</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>DB_USER = 'root' &gt;&gt; Utilisateur
+avec des droits administrateur de la base de données</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>DB_USER_PASSWORD = 'Admin-pwd' &gt;&gt;
+Mot de passe du compte ci-dessus</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>DB_NAME = 'wordpress_db' &gt;&gt; Nom de
+la base de données Wordpress</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FTP_IP_SRV='192.168.134.133' &gt;&gt; IP
+du serveur FTP distant</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FTP_PORT='21' &gt;&gt; Port du serveur
+FTP</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FTP_USER='sauvegarde' &gt;&gt; Compte
+utilisateur avec des droits d'écriture sur le FTP</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FTP_PASS='Admin-sav' &gt;&gt; Mot de
+passe du compte ci-dessus</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FILE_SAV_DUMPSQL =  DATEJOUR +
+&quot;-dumpsql.tar.bz2&quot; &gt;&gt; Donnera un fichier &quot;daté&quot; à la
+sauvegarde du dump de la base de donnée</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FILE_SAV_WORDPRESS =  DATEJOUR +
+&quot;-wordpress.tar.bz2&quot; &gt;&gt; Donnera un fichier &quot;daté&quot; à
+la sauvegarde du dossier Wordpress</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FILE_SAV_MYSQL =  DATEJOUR +
+&quot;-mysql.tar.bz2&quot; &gt;&gt; Donnera un fichier &quot;daté&quot; à la
+sauvegarde du dossier Mysql</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FILE_SAV_LAN = DATEJOUR +
+&quot;-conf-lan.tar.bz2&quot; &gt;&gt; Donnera un fichier &quot;daté&quot; à la
+sauvegarde des fichiers &quot;réseaux&quot;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FILE_SAV_APACHE_DEFAULT = DATEJOUR +
+&quot;-apache-default.tar.bz2&quot; &gt;&gt; Donnera un fichier daté à la
+sauvegarde de apache</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>FILE_LOG = DATEJOUR + &quot;-log&quot;
+&gt;&gt; Donnera un fichier daté pour le log de la sauvegarde</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>Avec crontab -e sur le serveur web vous
+pouvez ensuite planifier cette sauvegarde </span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>LE SCRIPT (sauver-incre.py) FAIT UNE
+SAUVEGARDE DE TYPE &quot;INCREMENTIELLE J+1&quot; SELON LA COMPLETE CI-DESSUS</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>L'envoi du mail fait appel à msmtp
+(adapter selon votre infrastructure) via le script bash maillog-incre1.sh.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>        (Dans le fichier
+maillog-incre1.sh adapter en saisissant l'adresse mail de destination)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>Le script sauvegarde les fichiers
+modifiés depuis la sauvegarde complète ci-dessus en ce qui concerne les
+dossiers WEB_PATH et</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>SQL_PATH</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&gt;&gt; Complète = JOUR J et
+sauver-incre.py fait une incrementielle J+1</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt'>&gt;&gt; Jour J+2, J+3 .../... pas codé
+actuellement</span>.</p>
+
+</div>
+
+</body>
+
+</html>
