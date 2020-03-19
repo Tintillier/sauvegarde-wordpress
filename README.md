@@ -3,7 +3,16 @@
 <head>
 <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
 <meta name=Generator content="Microsoft Word 15 (filtered)">
-
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
  p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin-top:0cm;
 	margin-right:0cm;
@@ -26,7 +35,6 @@ div.WordSection1
 </style>
 
 </head>
-
 <body lang=FR>
 
 <div class=WordSection1>
